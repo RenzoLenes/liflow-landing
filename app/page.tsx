@@ -1,12 +1,28 @@
+import Image from "next/image";
+import {
+  Wallet,
+  Target,
+  Clock,
+  Gear,
+  Sparkle,
+  ArrowRight,
+  Check,
+  X,
+  ArrowsClockwise,
+  ShieldCheck,
+  Users,
+  Lock,
+} from "@phosphor-icons/react/dist/ssr";
 import Background from "@/components/Background";
 import Reveal from "@/components/Reveal";
 import DiagnosticForm from "@/components/DiagnosticForm";
+import ScoreGauge from "@/components/ScoreGauge";
 
 /* ---------- small primitives ---------- */
 
-function Mono({ children }: { children: React.ReactNode }) {
+function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-mint-400/80">
+    <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-electric-700">
       {children}
     </span>
   );
@@ -14,30 +30,17 @@ function Mono({ children }: { children: React.ReactNode }) {
 
 function Logo() {
   return (
-    <div className="flex items-center gap-2.5">
-      <span className="relative flex h-7 w-7 items-center justify-center">
-        <span className="absolute inset-0 rounded-md bg-mint-400/20 blur-[6px]" />
-        <svg viewBox="0 0 24 24" className="relative h-7 w-7">
-          <rect
-            x="2.5"
-            y="2.5"
-            width="19"
-            height="19"
-            rx="5"
-            className="fill-ink-900 stroke-mint-400/70"
-            strokeWidth="1.2"
-          />
-          <path
-            d="M7 16 L7 8 M7 16 L12 16 M15 8 C12 8 12 12 15 12 C18 12 18 16 15 16"
-            className="stroke-mint-400"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            fill="none"
-          />
-        </svg>
-      </span>
+    <div className="flex items-center gap-2">
+      <Image
+        src="/mascot-head.png"
+        alt="LIFLOW OS"
+        width={56}
+        height={72}
+        priority
+        className="h-7 w-auto"
+      />
       <span className="font-mono text-sm font-semibold tracking-[0.2em] text-bone">
-        LIFLOW<span className="text-mint-400">OS</span>
+        LIFLOW<span className="text-brand-700"> OS</span>
       </span>
     </div>
   );
@@ -54,15 +57,15 @@ function Nav() {
         </div>
         <nav className="hidden items-center gap-1 rounded-2xl border border-ink-700/70 bg-ink-900/60 px-2 py-2 backdrop-blur-md md:flex">
           {[
+            ["Copiloto", "#copiloto"],
             ["Sistema", "#sistema"],
             ["Recorrido", "#recorrido"],
-            ["Cómo funciona", "#loop"],
             ["Para ti", "#persona"],
           ].map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className="rounded-xl px-3.5 py-1.5 text-sm text-bone-dim transition hover:bg-ink-700/50 hover:text-bone"
+              className="rounded-xl px-3.5 py-1.5 text-sm text-bone-dim transition hover:bg-ink-800 hover:text-bone"
             >
               {label}
             </a>
@@ -70,7 +73,7 @@ function Nav() {
         </nav>
         <a
           href="#diagnostico"
-          className="rounded-2xl border border-mint-400/40 bg-mint-400/10 px-4 py-2.5 text-sm font-medium text-mint-300 backdrop-blur-md transition hover:bg-mint-400/20"
+          className="rounded-2xl border border-brand-500/40 bg-brand-500/12 px-4 py-2.5 text-sm font-medium text-brand-700 backdrop-blur-md transition hover:bg-brand-500/20 active:translate-y-[1px]"
         >
           Diagnóstico gratis
         </a>
@@ -83,33 +86,26 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative mx-auto max-w-6xl px-6 pb-20 pt-36 sm:pt-44">
+    <section className="relative mx-auto max-w-6xl px-6 pb-20 pt-28 sm:pt-32">
       <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-        {/* copy */}
         <div>
           <Reveal>
-            <div className="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-900/50 px-3.5 py-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-mint-400 shadow-[0_0_8px_2px_rgba(95,227,161,0.6)]" />
-              <Mono>Sistema operativo para la vida adulta</Mono>
-            </div>
+            <Eyebrow>Sistema operativo para la vida adulta</Eyebrow>
           </Reveal>
 
-          <h1 className="mt-7 font-display text-5xl leading-[0.98] tracking-tight text-bone sm:text-6xl lg:text-[5.2rem]">
+          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-bone sm:text-6xl lg:text-[4.4rem]">
             <Reveal as="span" className="block" delay={80}>
-              Tu copiloto
+              Del caos <span className="text-brand-700">al control</span>
             </Reveal>
             <Reveal as="span" className="block" delay={160}>
-              financiero{" "}
-              <span className="italic text-mint-400">y de vida.</span>
+              de tu dinero, tu tiempo y tu futuro.
             </Reveal>
           </h1>
 
           <Reveal delay={260}>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-bone-dim">
-              No necesitas más disciplina ni más apps. Necesitas un{" "}
-              <span className="text-bone">sistema</span> que organice tu dinero,
-              tu tiempo y tus metas — para vivir con más claridad, control y
-              tranquilidad.
+              La IA que conecta tus finanzas, tu agenda y tus metas, y te dice
+              qué hacer. Una sola, en vez de cinco apps sueltas.
             </p>
           </Reveal>
 
@@ -117,239 +113,202 @@ function Hero() {
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <a
                 href="#diagnostico"
-                className="group inline-flex items-center gap-2 rounded-xl bg-mint-400 px-6 py-3.5 text-sm font-semibold text-ink-950 transition hover:bg-mint-300"
+                className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-electric-500 px-6 py-3.5 text-sm font-semibold text-bone shadow-[0_10px_30px_-10px_rgba(14,165,233,0.7)] transition hover:from-brand-400 hover:to-electric-400 hover:shadow-[0_14px_36px_-10px_rgba(14,165,233,0.85)] active:translate-y-[1px]"
               >
-                Empieza tu diagnóstico
-                <span className="transition-transform group-hover:translate-x-0.5">
-                  →
-                </span>
+                Diagnóstico gratis
+                <ArrowRight
+                  weight="bold"
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                />
               </a>
               <a
                 href="#sistema"
-                className="inline-flex items-center gap-2 rounded-xl border border-ink-600 px-6 py-3.5 text-sm font-medium text-bone transition hover:border-mint-400/50 hover:bg-ink-800/50"
+                className="inline-flex items-center gap-2 rounded-xl border border-ink-600 bg-ink-900 px-6 py-3.5 text-sm font-medium text-bone transition hover:border-brand-500/50 hover:bg-ink-850 active:translate-y-[1px]"
               >
                 Ver el sistema
               </a>
             </div>
           </Reveal>
-
-          <Reveal delay={460}>
-            <div className="mt-10 flex items-center gap-6 font-mono text-xs text-bone-faint">
-              <span>Gratis para empezar</span>
-              <span className="h-3 w-px bg-ink-600" />
-              <span>Sin tarjeta</span>
-              <span className="h-3 w-px bg-ink-600" />
-              <span>Para 22–35</span>
-            </div>
-          </Reveal>
         </div>
 
-        {/* OS window mock */}
         <Reveal delay={300}>
-          <OsPanel />
+          <div className="relative mx-auto max-w-md">
+            <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-br from-brand-500/25 via-electric-500/15 to-transparent blur-3xl" />
+            <Image
+              src="/mascot.png"
+              alt="El copiloto de LIFLOW OS orbitado por tus finanzas, tus metas y tu productividad"
+              width={780}
+              height={780}
+              priority
+              className="drift h-auto w-full"
+            />
+          </div>
         </Reveal>
       </div>
     </section>
   );
 }
 
-function OsPanel() {
-  const lines = [
-    { t: "booting liflow.os", c: "text-bone-faint" },
-    { t: "scan: finanzas ........ ok", c: "text-mint-300" },
-    { t: "scan: tiempo .......... ok", c: "text-mint-300" },
-    { t: "scan: metas ........... ok", c: "text-mint-300" },
-    { t: "estado: caos → claridad", c: "text-amber-300" },
-  ];
-  return (
-    <div className="relative">
-      <div className="absolute -inset-3 rounded-[28px] bg-mint-500/10 blur-2xl" />
-      <div className="relative overflow-hidden rounded-[22px] border border-ink-600/80 bg-ink-900/80 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl">
-        {/* titlebar */}
-        <div className="flex items-center justify-between border-b border-ink-700/70 bg-ink-850/60 px-4 py-3">
-          <div className="flex gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-ink-600" />
-            <span className="h-2.5 w-2.5 rounded-full bg-ink-600" />
-            <span className="h-2.5 w-2.5 rounded-full bg-mint-400/70" />
-          </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-bone-faint">
-            liflow — panel de vida
-          </span>
-          <span className="font-mono text-[10px] text-mint-400">●live</span>
-        </div>
-
-        {/* boot terminal */}
-        <div className="space-y-1.5 border-b border-ink-700/50 px-5 py-4 font-mono text-[12px]">
-          {lines.map((l, i) => (
-            <div key={i} className={l.c}>
-              <span className="text-mint-400/50">$</span> {l.t}
-            </div>
-          ))}
-          <div className="text-bone-faint">
-            <span className="text-mint-400/50">$</span>{" "}
-            <span className="cursor-blink text-mint-400">▮</span>
-          </div>
-        </div>
-
-        {/* metric tiles */}
-        <div className="grid grid-cols-2 gap-px bg-ink-700/40">
-          {[
-            { k: "Salud financiera", v: "72", s: "+8 este mes", up: true },
-            { k: "Ahorro automático", v: "S/420", s: "agendado", up: true },
-            { k: "Metas activas", v: "3", s: "en progreso", up: true },
-            { k: "Tiempo recuperado", v: "6h", s: "/ semana", up: true },
-          ].map((m) => (
-            <div key={m.k} className="bg-ink-900/80 px-5 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-wider text-bone-faint">
-                {m.k}
-              </p>
-              <p className="mt-1.5 font-display text-3xl text-bone">{m.v}</p>
-              <p className="mt-0.5 text-[11px] text-mint-400">↑ {m.s}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* progress bar */}
-        <div className="px-5 py-4">
-          <div className="mb-2 flex justify-between font-mono text-[10px] text-bone-faint">
-            <span>caos</span>
-            <span>claridad</span>
-            <span>control</span>
-            <span className="text-mint-400">crecimiento</span>
-          </div>
-          <div className="h-2 overflow-hidden rounded-full bg-ink-700">
-            <div className="h-full w-[58%] rounded-full bg-gradient-to-r from-amber-400 via-mint-400 to-mint-300" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ---------- problems / system errors ---------- */
+/* ---------- problems ---------- */
 
 const PROBLEMS = [
-  ["err_01", "Estrés financiero constante", "El dinero pesa todos los días."],
-  ["err_02", "Gastos e ingresos en desorden", "Nunca sabes a dónde se fue."],
-  ["err_03", "Metas sin claridad", "Avanzas, pero ¿hacia dónde?"],
-  ["err_04", "5 apps desconectadas", "Cada una con un pedazo de tu vida."],
-  ["err_05", "Sensación de estancamiento", "Trabajas más y avanzas igual."],
-  ["err_06", "Hábitos que no sostienes", "La disciplina no es el problema."],
+  ["Llega fin de mes y no sabes a dónde se fue", "Gastas sin rastrear y el sueldo desaparece antes del 20."],
+  ["Gastos e ingresos en cinco lugares", "Una hoja, dos apps y tu cabeza. Nada cuadra."],
+  ["Quieres ahorrar e invertir, pero nunca empiezas", "Sabes que deberías. No sabes por dónde."],
+  ["Cinco apps y ningún panorama", "Cada una tiene un pedazo. Ninguna te muestra el todo."],
+  ["Ganas más, pero avanzas igual", "Ves a otros progresar y la sensación de estar atrasado no se va."],
+  ["Empiezas un presupuesto y lo dejas a la 2ª semana", "No es disciplina. Es que hacerlo a mano agota."],
 ];
 
 function Problems() {
   return (
     <section className="relative mx-auto max-w-6xl px-6 py-24">
       <Reveal>
-        <Mono>Diagnóstico · errores del sistema actual</Mono>
-        <h2 className="mt-4 max-w-2xl font-display text-4xl leading-tight text-bone sm:text-5xl">
-          La vida adulta no vino con{" "}
-          <span className="italic text-amber-300">manual</span>.
+        <h2 className="max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight text-bone sm:text-5xl">
+          La vida adulta no vino con manual.
         </h2>
+        <p className="mt-5 max-w-lg text-bone-dim">
+          Tienes tu primer sueldo formal y más ingresos que nunca. Aun así, cada
+          mes se siente como empezar de cero. Estas son las grietas que nadie te
+          enseñó a tapar.
+        </p>
       </Reveal>
 
-      <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-ink-700/60 bg-ink-700/40 sm:grid-cols-2 lg:grid-cols-3">
-        {PROBLEMS.map(([code, title, sub], i) => (
-          <Reveal key={code} delay={i * 70}>
-            <div className="group h-full bg-ink-900/70 p-6 transition hover:bg-ink-850">
-              <div className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400/80" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/70">
-                  {code}
-                </span>
-              </div>
-              <h3 className="mt-4 text-lg font-semibold text-bone">{title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-bone-dim">
-                {sub}
-              </p>
+      <div className="mt-14 grid gap-x-12 sm:grid-cols-2">
+        {PROBLEMS.map(([title, sub], i) => (
+          <Reveal key={title} delay={(i % 2) * 60 + Math.floor(i / 2) * 40}>
+            <div className="border-t border-ink-700/60 py-6">
+              <h3 className="text-lg font-medium text-bone">{title}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-bone-dim">{sub}</p>
             </div>
           </Reveal>
         ))}
       </div>
 
-      <Reveal delay={200}>
-        <p className="mt-10 text-center font-display text-2xl italic text-bone-dim">
-          No te falta esfuerzo. Te falta un sistema.
+      <Reveal delay={160}>
+        <p className="mt-12 font-display text-2xl font-medium tracking-tight text-bone-dim">
+          No te falta esfuerzo. Te falta un{" "}
+          <span className="text-bone">sistema</span>.
         </p>
       </Reveal>
     </section>
   );
 }
 
-/* ---------- modules / value prop ---------- */
+/* ---------- modules ---------- */
+
+const COPILOT_DOES = [
+  "Ve tu panorama completo: dinero, agenda y metas en un mismo lugar.",
+  "Detecta qué te está frenando y cuánto te cuesta cada mes.",
+  "Te dice el siguiente paso concreto, hoy. No otro dashboard que interpretar.",
+];
+
+function Copilot() {
+  return (
+    <section id="copiloto" className="relative mx-auto max-w-6xl px-6 py-24">
+      <div className="hairline mb-16 h-px w-full" />
+      <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <Reveal>
+          <Eyebrow>El diferenciador</Eyebrow>
+          <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight text-bone sm:text-5xl">
+            La única IA que cruza tu dinero, tu tiempo y tus metas{" "}
+            <span className="text-brand-700">para decirte el siguiente paso.</span>
+          </h2>
+          <p className="mt-5 max-w-xl text-bone-dim">
+            Notion, YNAB o Todoist hacen bien una cosa. Ninguna ve las tres a la
+            vez, así que el trabajo de conectarlas queda en ti. El copiloto de
+            LIFLOW vive en ese cruce: por eso puede recomendarte algo que ninguna
+            app suelta podría.
+          </p>
+
+          <ul className="mt-8 space-y-4">
+            {COPILOT_DOES.map((t, i) => (
+              <Reveal key={i} delay={i * 80}>
+                <li className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-electric-500 text-bone">
+                    <Sparkle weight="fill" className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="text-bone-dim">{t}</span>
+                </li>
+              </Reveal>
+            ))}
+          </ul>
+        </Reveal>
+
+        {/* benchmarking: apps sueltas vs el cruce de datos (data moat) */}
+        <Reveal delay={200}>
+          <div className="space-y-3">
+            <div className="elev rounded-2xl border border-ink-700 bg-ink-900 p-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-bone-faint">
+                Apps sueltas
+              </p>
+              <div className="mt-4 space-y-2.5">
+                {["Notion", "YNAB", "Todoist"].map((app) => (
+                  <div key={app} className="flex items-center gap-3">
+                    <X weight="bold" className="h-4 w-4 shrink-0 text-bone-faint" />
+                    <span className="text-sm text-bone-dim">
+                      <span className="text-bone">{app}</span> ve solo un pedazo.
+                      Tú haces de pegamento.
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="elev relative overflow-hidden rounded-2xl border border-brand-500/40 bg-gradient-to-br from-brand-500/15 via-electric-500/10 to-ink-900 p-6">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500/60 to-transparent" />
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-brand-700">
+                LIFLOW OS
+              </p>
+              <div className="mt-4 flex items-center gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-electric-500 text-bone">
+                  <Check weight="bold" className="h-3.5 w-3.5" />
+                </span>
+                <span className="text-sm text-bone">
+                  Cruza dinero, tiempo y metas, y te da el siguiente paso.
+                </span>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- modules ---------- */
 
 const MODULES = [
-  {
-    icon: "◈",
-    name: "Finanzas",
-    desc: "Ingresos, gastos y ahorro en un solo lugar, ordenados solos.",
-  },
-  {
-    icon: "◎",
-    name: "Metas",
-    desc: "Define hacia dónde vas y mide cada paso con claridad.",
-  },
-  {
-    icon: "⧗",
-    name: "Tiempo",
-    desc: "Tu agenda y tus prioridades alineadas con lo que importa.",
-  },
-  {
-    icon: "⚙",
-    name: "Automatización",
-    desc: "Decisiones y tareas repetitivas que el sistema hace por ti.",
-  },
-  {
-    icon: "✦",
-    name: "IA · Copiloto",
-    desc: "Diagnóstico y recomendaciones personalizadas, cuando las necesitas.",
-  },
+  { Icon: Wallet, name: "Finanzas", desc: "Ingresos, gastos y ahorro en un solo lugar, ordenados solos." },
+  { Icon: Target, name: "Metas", desc: "Define hacia dónde vas y el copiloto mide cada paso." },
+  { Icon: Clock, name: "Tiempo", desc: "Tu agenda y tus prioridades alineadas con lo que importa." },
+  { Icon: Gear, name: "Automatización", desc: "Las tareas repetitivas que el sistema hace por ti." },
 ];
 
 function Modules() {
   return (
     <section id="sistema" className="relative mx-auto max-w-6xl px-6 py-24">
-      <div className="hairline mb-16 h-px w-full" />
       <Reveal>
-        <Mono>El sistema · módulos integrados</Mono>
-        <h2 className="mt-4 max-w-3xl font-display text-4xl leading-tight text-bone sm:text-5xl">
-          Un solo ecosistema. Tu dinero, tu tiempo y tus metas{" "}
-          <span className="italic text-mint-400">hablando entre sí.</span>
+        <Eyebrow>Lo que el copiloto ordena</Eyebrow>
+        <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight tracking-tight text-bone sm:text-5xl">
+          Cuatro frentes de tu vida, en un mismo sistema.
         </h2>
       </Reveal>
 
-      <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {MODULES.map((m, i) => (
-          <Reveal key={m.name} delay={i * 80}>
-            <div className="group relative h-full overflow-hidden rounded-2xl border border-ink-700/70 bg-ink-900/60 p-7 transition duration-300 hover:-translate-y-1 hover:border-mint-400/40 hover:bg-ink-850">
-              <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-mint-500/0 blur-2xl transition group-hover:bg-mint-500/20" />
-              <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-mint-400/25 bg-mint-500/10 text-xl text-mint-300">
-                {m.icon}
+          <Reveal key={m.name} delay={i * 70}>
+            <div className="elev elev-hover group relative h-full overflow-hidden rounded-2xl border border-ink-700 bg-ink-900 p-7 hover:border-electric-500/50">
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-electric-500/15 to-brand-500/10 text-electric-700 ring-1 ring-inset ring-electric-500/20 transition group-hover:from-electric-500/25 group-hover:to-brand-500/15">
+                <m.Icon weight="duotone" className="h-6 w-6" />
               </span>
-              <h3 className="mt-5 text-xl font-semibold text-bone">{m.name}</h3>
+              <h3 className="mt-5 text-xl font-medium text-bone">{m.name}</h3>
               <p className="mt-2 text-sm leading-relaxed text-bone-dim">
                 {m.desc}
               </p>
             </div>
           </Reveal>
         ))}
-
-        {/* feature panel filling the 6th cell */}
-        <Reveal delay={400}>
-          <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-mint-400/30 bg-gradient-to-br from-mint-500/15 via-ink-900/60 to-ink-900/80 p-7">
-            <div>
-              <Mono>Centralización</Mono>
-              <p className="mt-4 font-display text-2xl leading-snug text-bone">
-                Todo conectado.{" "}
-                <span className="italic text-mint-300">Nada disperso.</span>
-              </p>
-            </div>
-            <p className="mt-6 text-sm leading-relaxed text-bone-dim">
-              Deja de saltar entre 5 apps. LIFLOW OS reúne lo esencial y lo
-              automatiza para que tú solo decidas lo importante.
-            </p>
-          </div>
-        </Reveal>
       </div>
     </section>
   );
@@ -358,42 +317,17 @@ function Modules() {
 /* ---------- journey ---------- */
 
 const STAGES = [
-  {
-    n: "01",
-    t: "Caos",
-    d: "Todo disperso, sin visión. El punto de partida de casi todos.",
-    color: "text-amber-300",
-    dot: "bg-amber-400",
-  },
-  {
-    n: "02",
-    t: "Claridad",
-    d: "Ves tu situación real. Sabes dónde estás parado.",
-    color: "text-bone",
-    dot: "bg-bone",
-  },
-  {
-    n: "03",
-    t: "Control",
-    d: "Decides con datos. El sistema trabaja contigo.",
-    color: "text-mint-300",
-    dot: "bg-mint-400",
-  },
-  {
-    n: "04",
-    t: "Crecimiento",
-    d: "Avanzas de forma sostenible, sin agotarte.",
-    color: "text-mint-400",
-    dot: "bg-mint-300",
-  },
+  { n: "01", t: "Caos", d: "Todo disperso, sin visión. El punto de partida de casi todos.", color: "text-amber-500", dot: "bg-amber-400" },
+  { n: "02", t: "Claridad", d: "Ves tu situación real. Sabes dónde estás parado.", color: "text-electric-700", dot: "bg-electric-500" },
+  { n: "03", t: "Control", d: "Decides con datos. El sistema trabaja contigo.", color: "text-brand-700", dot: "bg-brand-500" },
+  { n: "04", t: "Crecimiento", d: "Avanzas de forma sostenible, sin agotarte.", color: "text-mint-700", dot: "bg-mint-500" },
 ];
 
 function Journey() {
   return (
     <section id="recorrido" className="relative mx-auto max-w-6xl px-6 py-24">
       <Reveal>
-        <Mono>El recorrido</Mono>
-        <h2 className="mt-4 font-display text-4xl leading-tight text-bone sm:text-5xl">
+        <h2 className="font-display text-4xl font-semibold leading-tight tracking-tight text-bone sm:text-5xl">
           De caos a crecimiento.
         </h2>
         <p className="mt-4 max-w-xl text-bone-dim">
@@ -403,51 +337,34 @@ function Journey() {
       </Reveal>
 
       <div className="relative mt-16">
-        {/* connecting flow line */}
         <svg
-          className="absolute left-0 top-7 hidden h-2 w-full lg:block"
+          className="absolute left-0 top-[7px] hidden h-2 w-full lg:block"
           preserveAspectRatio="none"
           viewBox="0 0 100 2"
         >
+          <line x1="0" y1="1" x2="100" y2="1" stroke="var(--color-ink-600)" strokeWidth="0.4" />
           <line
             x1="0"
             y1="1"
             x2="100"
             y2="1"
-            className="stroke-ink-600"
-            strokeWidth="0.4"
-          />
-          <line
-            x1="0"
-            y1="1"
-            x2="100"
-            y2="1"
-            className="flow-line stroke-mint-400"
-            strokeWidth="0.5"
+            className="flow-line"
+            stroke="var(--color-electric-500)"
+            strokeWidth="0.6"
             strokeDasharray="3 5"
           />
         </svg>
 
-        <div className="grid gap-8 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {STAGES.map((s, i) => (
-            <Reveal key={s.t} delay={i * 110}>
+            <Reveal key={s.t} delay={i * 90}>
               <div className="relative">
-                <span
-                  className={`relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-ink-600 bg-ink-900 font-mono text-sm ${s.color}`}
-                >
-                  <span
-                    className={`absolute h-2 w-2 -translate-y-5 rounded-full ${s.dot} shadow-[0_0_10px_2px_currentColor]`}
-                  />
-                  {s.n}
-                </span>
-                <h3
-                  className={`mt-6 font-display text-3xl ${s.color}`}
-                >
+                <span className={`block h-3.5 w-3.5 rounded-full ${s.dot}`} />
+                <span className={`mt-5 block font-mono text-xs ${s.color}`}>{s.n}</span>
+                <h3 className="mt-1 font-display text-2xl font-medium tracking-tight text-bone">
                   {s.t}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-bone-dim">
-                  {s.d}
-                </p>
+                <p className="mt-2 text-sm leading-relaxed text-bone-dim">{s.d}</p>
               </div>
             </Reveal>
           ))}
@@ -460,12 +377,12 @@ function Journey() {
 /* ---------- growth loop ---------- */
 
 const LOOP = [
-  "Descubres contenido educativo",
-  "Haces un diagnóstico gratuito",
-  "Obtienes claridad real",
-  "Usas herramientas y automatizaciones",
-  "Mejoras tus resultados",
-  "Compartes tu experiencia",
+  "Haces tu diagnóstico gratuito",
+  "Recibes tu Score de Salud Financiera",
+  "El copiloto te da tu siguiente paso",
+  "Automatizas y avanzas a tus metas",
+  "Tu Score sube cada mes",
+  "Compartes tu progreso y alguien más empieza",
 ];
 
 function GrowthLoop() {
@@ -475,34 +392,44 @@ function GrowthLoop() {
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <Reveal>
           <div className="lg:sticky lg:top-28">
-            <Mono>Cómo funciona · growth loop</Mono>
-            <h2 className="mt-4 font-display text-4xl leading-tight text-bone sm:text-5xl">
-              Un ciclo que{" "}
-              <span className="italic text-mint-400">se refuerza solo.</span>
+            <h2 className="font-display text-4xl font-semibold leading-tight tracking-tight text-bone sm:text-5xl">
+              Un ciclo que se refuerza solo.
             </h2>
             <p className="mt-5 max-w-md text-bone-dim">
-              Cada paso alimenta al siguiente. Mientras más lo usas, más claro y
-              más automático se vuelve todo.
+              Tu Score de Salud Financiera es el motor. Verlo subir es la razón
+              para volver, y para mostrarle a alguien más por dónde empezar.
             </p>
           </div>
         </Reveal>
 
         <ol className="relative space-y-3">
-          {LOOP.map((step, i) => (
-            <Reveal key={i} delay={i * 70}>
-              <li className="group flex items-center gap-5 rounded-2xl border border-ink-700/60 bg-ink-900/50 px-6 py-5 transition hover:border-mint-400/40 hover:bg-ink-850">
-                <span className="font-mono text-sm text-mint-400/60">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="text-lg text-bone">{step}</span>
-                {i === LOOP.length - 1 && (
-                  <span className="ml-auto font-mono text-xs text-mint-400">
-                    ↻ vuelve a empezar
+          {LOOP.map((step, i) => {
+            const isScore = i === 1;
+            return (
+              <Reveal key={i} delay={i * 60}>
+                <li
+                  className={`elev group flex items-center gap-5 rounded-2xl border px-6 py-5 transition ${
+                    isScore
+                      ? "border-brand-500/40 bg-gradient-to-r from-brand-500/12 to-electric-500/8"
+                      : "border-ink-700 bg-ink-900 hover:border-brand-500/50 hover:bg-ink-850"
+                  }`}
+                >
+                  <span className="font-mono text-sm text-electric-700">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                )}
-              </li>
-            </Reveal>
-          ))}
+                  <span className="text-lg text-bone">{step}</span>
+                  {isScore && (
+                    <span className="ml-auto rounded-full bg-gradient-to-r from-brand-500 to-electric-500 px-2.5 py-1 font-mono text-[10px] font-semibold text-bone">
+                      el artefacto
+                    </span>
+                  )}
+                  {i === LOOP.length - 1 && (
+                    <ArrowsClockwise weight="bold" className="ml-auto h-4 w-4 text-brand-700" />
+                  )}
+                </li>
+              </Reveal>
+            );
+          })}
         </ol>
       </div>
     </section>
@@ -511,47 +438,102 @@ function GrowthLoop() {
 
 /* ---------- persona ---------- */
 
-const TRAITS = [
-  "Tienen ingresos pero sienten que no avanzan",
-  "Buscan independencia financiera",
-  "Quieren mejorar su productividad",
-  "Desean reducir el estrés y decidir mejor",
-  "Valoran la tecnología y la automatización",
+const BEHAVIORS = [
+  "Revisa el banco con ansiedad varias veces al día",
+  "Abandona cada presupuesto a la segunda semana",
+  "Tiene cinco apps y ninguna le da el panorama completo",
+  "Quiere invertir, pero no sabe por dónde empezar",
+  "Gana más que nunca y aun así no ve el progreso",
 ];
 
 function Persona() {
   return (
     <section id="persona" className="relative mx-auto max-w-6xl px-6 py-24">
-      <div className="overflow-hidden rounded-3xl border border-ink-700/70 bg-ink-900/60">
-        <div className="grid lg:grid-cols-2">
-          <div className="border-b border-ink-700/60 p-10 lg:border-b-0 lg:border-r">
-            <Reveal>
-              <Mono>Hecho para ti si…</Mono>
-              <h2 className="mt-4 font-display text-4xl leading-tight text-bone">
-                Profesional joven,{" "}
-                <span className="italic text-mint-400">22 a 35</span>.
-              </h2>
-              <p className="mt-5 text-bone-dim">
-                Tienes ambición y energía. Lo que te falta no es esfuerzo: es un
-                sistema que ordene el caos por ti.
+      <div className="grid items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-ink-700">
+            <Image
+              src="/person.jpeg"
+              alt="Camila, 26, profesional con su primer sueldo formal"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-950/90 to-transparent p-6 pt-16">
+              <p className="font-display text-lg font-medium text-white">
+                “Gano bien, pero no sé en qué se me va.”
               </p>
-            </Reveal>
+              <p className="mt-1 font-mono text-xs text-white/70">
+                Camila, 26 · primer sueldo formal
+              </p>
+            </div>
           </div>
-          <div className="p-10">
-            <ul className="space-y-4">
-              {TRAITS.map((t, i) => (
-                <Reveal key={i} delay={i * 80}>
-                  <li className="flex items-start gap-3">
-                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-mint-400/40 bg-mint-500/10 text-[11px] text-mint-400">
-                      ✓
-                    </span>
-                    <span className="text-bone-dim">{t}</span>
-                  </li>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
+        </Reveal>
+
+        <div>
+          <Reveal>
+            <Eyebrow>Hecho para ti si…</Eyebrow>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight text-bone">
+              Tu primer sueldo formal, <span className="text-brand-700">y mil dudas</span>.
+            </h2>
+            <p className="mt-5 text-bone-dim">
+              No es un tema de edad ni de ganar más. Es no tener un sistema que
+              ordene el caos por ti. Si te reconoces en esto, LIFLOW es para ti.
+            </p>
+          </Reveal>
+
+          <ul className="mt-8 space-y-4">
+            {BEHAVIORS.map((t, i) => (
+              <Reveal key={i} delay={i * 70}>
+                <li className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-mint-500/40 bg-mint-500/10 text-mint-700">
+                    <Check weight="bold" className="h-3 w-3" />
+                  </span>
+                  <span className="text-bone-dim">{t}</span>
+                </li>
+              </Reveal>
+            ))}
+          </ul>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- trust ---------- */
+
+const TRUST = [
+  { Icon: Lock, title: "No conectas tu banco", desc: "El diagnóstico son solo preguntas. Cero acceso a tus cuentas." },
+  { Icon: ShieldCheck, title: "Tus datos, cifrados", desc: "Privados de punta a punta. Nunca los vendemos ni los compartimos." },
+  { Icon: Users, title: "Lista de espera abierta", desc: "Estamos en acceso temprano. Sé de los primeros en entrar." },
+];
+
+function Trust() {
+  return (
+    <section className="relative mx-auto max-w-6xl px-6 py-24">
+      <div className="hairline mb-16 h-px w-full" />
+      <Reveal>
+        <h2 className="max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight text-bone sm:text-5xl">
+          Confianza primero. Después, tu dinero.
+        </h2>
+        <p className="mt-5 max-w-lg text-bone-dim">
+          Sabemos lo que pedimos. Por eso el diagnóstico no toca tu banco y tus
+          datos son tuyos.
+        </p>
+      </Reveal>
+
+      <div className="mt-12 grid gap-4 md:grid-cols-3">
+        {TRUST.map((t, i) => (
+          <Reveal key={t.title} delay={i * 80}>
+            <div className="elev elev-hover h-full rounded-2xl border border-ink-700 bg-ink-900 p-7 hover:border-brand-500/40">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500/15 to-electric-500/10 text-brand-700 ring-1 ring-inset ring-brand-500/20">
+                <t.Icon weight="duotone" className="h-5 w-5" />
+              </span>
+              <h3 className="mt-5 text-lg font-medium text-bone">{t.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-bone-dim">{t.desc}</p>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
@@ -563,21 +545,35 @@ function FinalCta() {
   return (
     <section id="diagnostico" className="relative mx-auto max-w-6xl px-6 py-24">
       <Reveal>
-        <div className="relative overflow-hidden rounded-[32px] border border-mint-400/30 bg-gradient-to-br from-ink-850 via-ink-900 to-ink-900 px-8 py-16 text-center sm:px-16">
-          <div className="absolute -top-1/2 left-1/2 h-[120%] w-[60%] -translate-x-1/2 rounded-full bg-mint-500/15 blur-[100px]" />
-          <div className="relative">
-            <Mono>Empieza gratis</Mono>
-            <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl leading-[1.05] text-bone sm:text-6xl">
-              Conoce tu situación real en{" "}
-              <span className="italic text-mint-400">3 minutos.</span>
-            </h2>
-            <p className="mx-auto mt-5 max-w-lg text-bone-dim">
-              Haz tu diagnóstico financiero gratuito y recibe recomendaciones
-              personalizadas para pasar del caos a la claridad.
-            </p>
-            <div className="mx-auto mt-9 max-w-md text-left">
-              <DiagnosticForm />
+        <div className="relative overflow-hidden rounded-[32px] border border-brand-500/25 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 px-8 py-14 shadow-[0_24px_70px_-30px_rgba(12,24,48,0.35)] sm:px-12 lg:px-16">
+          <div className="absolute -top-1/2 left-1/2 h-[120%] w-[60%] -translate-x-1/2 rounded-full bg-gradient-to-br from-brand-500/15 to-electric-500/12 blur-[100px]" />
+          <div className="relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <Eyebrow>Empieza gratis</Eyebrow>
+              <h2 className="mt-5 max-w-xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-bone sm:text-5xl">
+                Tu Score de Salud Financiera en{" "}
+                <span className="text-brand-700">3 minutos.</span>
+              </h2>
+              <p className="mt-5 max-w-lg text-bone-dim">
+                Responde 6 preguntas y el copiloto te devuelve tu Score y el
+                primer paso para mejorarlo. Sin conectar tu banco.
+              </p>
+              <div className="mt-9 max-w-md">
+                <DiagnosticForm />
+              </div>
             </div>
+
+            <Reveal delay={150}>
+              <div className="elev flex flex-col items-center rounded-3xl border border-ink-700 bg-ink-900 p-8">
+                <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-bone-faint">
+                  Esto recibes
+                </p>
+                <ScoreGauge value={68} label="Salud financiera" caption="ejemplo" />
+                <p className="mt-4 text-center text-sm text-bone-dim">
+                  Un número claro para saber dónde estás, y verlo subir cada mes.
+                </p>
+              </div>
+            </Reveal>
           </div>
         </div>
       </Reveal>
@@ -589,10 +585,16 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="relative border-t border-ink-700/60">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 sm:flex-row">
-        <Logo />
-        <p className="font-display text-lg italic text-bone-dim">
+    <footer className="relative border-t border-ink-700">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-12 text-center">
+        <Image
+          src="/logo-transparent.png"
+          alt="LIFLOW OS · Tu vida, en automático"
+          width={396}
+          height={446}
+          className="h-24 w-auto"
+        />
+        <p className="font-mono text-xs text-bone-faint">
           Caos → Claridad → Control → Crecimiento
         </p>
         <p className="font-mono text-xs text-bone-faint">
@@ -613,10 +615,12 @@ export default function Page() {
       <main>
         <Hero />
         <Problems />
+        <Copilot />
         <Modules />
         <Journey />
         <GrowthLoop />
         <Persona />
+        <Trust />
         <FinalCta />
       </main>
       <Footer />

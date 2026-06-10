@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import ChatlingWidget from "@/components/ChatlingWidget";
 
-const instrument = Instrument_Serif({
-  weight: ["400"],
-  style: ["normal", "italic"],
+const spaceGrotesk = Space_Grotesk({
+  weight: ["500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-instrument",
+  variable: "--font-space",
   display: "swap",
 });
 
@@ -23,11 +23,11 @@ const jbMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LIFLOW OS — Tu copiloto financiero y de vida",
+  title: "LIFLOW OS · Tu copiloto financiero y de vida",
   description:
     "El sistema operativo para la vida adulta. Organiza tu dinero, tu tiempo y tus metas con automatización e IA. De caos a claridad, control y crecimiento.",
   openGraph: {
-    title: "LIFLOW OS — Tu copiloto financiero y de vida",
+    title: "LIFLOW OS · Tu copiloto financiero y de vida",
     description:
       "No necesitas más disciplina ni más apps. Necesitas un sistema. Diagnóstico financiero gratuito.",
     type: "website",
@@ -40,9 +40,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${instrument.variable} ${hanken.variable} ${jbMono.variable} grain`}
+        className={`${spaceGrotesk.variable} ${hanken.variable} ${jbMono.variable} grain`}
       >
         {children}
+        <ChatlingWidget />
       </body>
     </html>
   );

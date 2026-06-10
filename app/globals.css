@@ -1,27 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette — deep ink canvas with mint growth + warm amber */
-  --color-ink-950: #060807;
-  --color-ink-900: #0a0e0c;
-  --color-ink-850: #0e1311;
-  --color-ink-800: #141a17;
-  --color-ink-700: #1d2521;
-  --color-ink-600: #2a352f;
+  /* Palette — LIFLOW OS, light theme derived from the logo: paper white + turquoise + cyan over navy ink */
 
-  --color-bone: #eef2ec;
-  --color-bone-dim: #aab5ad;
-  --color-bone-faint: #6c776f;
+  /* Surfaces — light paper (ink scale = backgrounds & borders, light → less light) */
+  --color-ink-950: #eef4f5; /* fondo principal (paper) */
+  --color-ink-900: #ffffff; /* tarjetas, nav */
+  --color-ink-850: #f4f8f9; /* superficie sutil */
+  --color-ink-800: #e7eff1; /* hover */
+  --color-ink-700: #dae5e8; /* borde */
+  --color-ink-600: #c4d3d7; /* borde fuerte */
 
-  --color-mint-300: #9bf0c5;
-  --color-mint-400: #5fe3a1;
-  --color-mint-500: #2bd183;
-  --color-mint-600: #16a865;
+  /* Ink text — navy (bone scale = texto, oscuro → claro) */
+  --color-bone: #0c1830; /* texto principal navy */
+  --color-bone-dim: #45586e; /* texto secundario */
+  --color-bone-faint: #79899d; /* etiquetas y descripciones */
 
-  --color-amber-300: #f5d49a;
-  --color-amber-400: #eab464;
+  /* Brand — turquesa (la firma del logo: marca, CTA, destacados) */
+  --color-brand-300: #5eead4;
+  --color-brand-400: #2dd4bf;
+  --color-brand-500: #14b8a6; /* turquesa principal ~ #12b0af del logo */
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e; /* turquesa texto sobre claro */
 
-  --font-display: var(--font-instrument), Georgia, serif;
+  /* Electric — cian / sky (IA, tecnología, dashboards) */
+  --color-electric-300: #7dd3fc;
+  --color-electric-400: #38bdf8;
+  --color-electric-500: #0ea5e9; /* cian eléctrico */
+  --color-electric-600: #0284c7;
+  --color-electric-700: #036aa1; /* cian texto sobre claro */
+
+  /* Mint — verde éxito (metas, progreso, indicadores positivos) */
+  --color-mint-300: #6ee7b7;
+  --color-mint-400: #34d399;
+  --color-mint-500: #10b981; /* verde éxito */
+  --color-mint-600: #059669;
+  --color-mint-700: #047857; /* verde texto sobre claro */
+
+  /* Amber — estado "caos" / advertencia (uso puntual) */
+  --color-amber-300: #fcd9a8;
+  --color-amber-400: #f0b35e;
+  --color-amber-500: #d97706; /* ámbar texto sobre claro */
+
+  --font-display: var(--font-space), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jb-mono), ui-monospace, monospace;
 
@@ -45,8 +66,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-mint-400);
-  color: var(--color-ink-950);
+  background: var(--color-brand-500);
+  color: var(--color-bone);
 }
 
 /* Atmospheric grain overlay */
@@ -56,7 +77,7 @@ body {
   inset: 0;
   z-index: 100;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.025;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -98,10 +119,48 @@ body {
 }
 .flow-line { animation: flow-dash 6s linear infinite; }
 
+/* Score gauge: draws as it enters the viewport (scroll-driven, progressive enhancement) */
+@keyframes gauge-draw {
+  from { stroke-dashoffset: var(--c); }
+  to { stroke-dashoffset: var(--target); }
+}
+.gauge-arc {
+  animation: gauge-draw 1.4s var(--ease-out-expo) both;
+  animation-timeline: view();
+  animation-range: cover 5% cover 45%;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .drift, .drift-slow, .flow-line, .cursor-blink {
+  .reveal,
+  .drift,
+  .drift-slow,
+  .flow-line,
+  .gauge-arc,
+  .cursor-blink {
     animation: none !important;
     opacity: 1;
+  }
+}
+
+/* Elevation — soft navy-tinted shadow so cards lift off the light canvas */
+.elev {
+  box-shadow:
+    0 1px 2px rgba(12, 24, 48, 0.04),
+    0 10px 28px -14px rgba(12, 24, 48, 0.16);
+}
+.elev-hover {
+  transition: box-shadow 0.35s var(--ease-out-expo),
+    transform 0.35s var(--ease-out-expo), border-color 0.35s var(--ease-out-expo);
+}
+.elev-hover:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 4px 10px rgba(12, 24, 48, 0.06),
+    0 22px 48px -18px rgba(20, 184, 166, 0.32);
+}
+@media (prefers-reduced-motion: reduce) {
+  .elev-hover:hover {
+    transform: none;
   }
 }
 
@@ -109,7 +168,8 @@ body {
   background-image: linear-gradient(
     to right,
     transparent,
-    color-mix(in oklab, var(--color-mint-400) 40%, transparent),
+    color-mix(in oklab, var(--color-brand-500) 45%, transparent),
+    color-mix(in oklab, var(--color-electric-500) 45%, transparent),
     transparent
   );
 }

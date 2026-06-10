@@ -15,10 +15,17 @@ export default function Reveal({
 }) {
   const ref = useRef<HTMLElement>(null);
   const [shown, setShown] = useState(false);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Respect reduced-motion: show immediately, skip the rise animation.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReduced(true);
+      setShown(true);
+      return;
+    }
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -38,12 +45,14 @@ export default function Reveal({
       ref={ref}
       className={className}
       style={
-        shown
-          ? {
-              animation: `rise 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards`,
-              opacity: 0,
-            }
-          : { opacity: 0 }
+        reduced
+          ? undefined
+          : shown
+            ? {
+                animation: `rise 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards`,
+                opacity: 0,
+              }
+            : { opacity: 0 }
       }
     >
       {children}
