@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Users,
   Lock,
+  Quotes,
 } from "@phosphor-icons/react/dist/ssr";
 import Background from "@/components/Background";
 import Reveal from "@/components/Reveal";
@@ -84,16 +85,23 @@ function Nav() {
 
 /* ---------- hero ---------- */
 
+const HERO_BULLETS = [
+  "Tu Score de Salud Financiera al instante",
+  "Recomendaciones con IA, no otra app que interpretar",
+  "Gratis, en 3 minutos y sin conectar tu banco",
+];
+
 function Hero() {
   return (
-    <section className="relative mx-auto max-w-6xl px-6 pb-20 pt-28 sm:pt-32">
-      <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+    <section id="diagnostico" className="relative mx-auto max-w-6xl px-6 pb-20 pt-28 sm:pt-32">
+      <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        {/* left: message + benefits */}
         <div>
           <Reveal>
             <Eyebrow>Sistema operativo para la vida adulta</Eyebrow>
           </Reveal>
 
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-bone sm:text-6xl lg:text-[4.4rem]">
+          <h1 className="mt-6 font-display text-[2.7rem] font-semibold leading-[1.04] tracking-tight text-bone sm:text-5xl lg:text-[3.9rem]">
             <Reveal as="span" className="block" delay={80}>
               Del caos <span className="text-brand-700">al control</span>
             </Reveal>
@@ -103,48 +111,68 @@ function Hero() {
           </h1>
 
           <Reveal delay={260}>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-bone-dim">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-bone-dim">
               La IA que conecta tus finanzas, tu agenda y tus metas, y te dice
               qué hacer. Una sola, en vez de cinco apps sueltas.
             </p>
           </Reveal>
 
-          <Reveal delay={360}>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <a
-                href="#diagnostico"
-                className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-electric-500 px-6 py-3.5 text-sm font-semibold text-bone shadow-[0_10px_30px_-10px_rgba(14,165,233,0.7)] transition hover:from-brand-400 hover:to-electric-400 hover:shadow-[0_14px_36px_-10px_rgba(14,165,233,0.85)] active:translate-y-[1px]"
-              >
-                Diagnóstico gratis
-                <ArrowRight
-                  weight="bold"
-                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-                />
-              </a>
-              <a
-                href="#sistema"
-                className="inline-flex items-center gap-2 rounded-xl border border-ink-600 bg-ink-900 px-6 py-3.5 text-sm font-medium text-bone transition hover:border-brand-500/50 hover:bg-ink-850 active:translate-y-[1px]"
-              >
-                Ver el sistema
-              </a>
-            </div>
+          <Reveal delay={340}>
+            <ul className="mt-8 space-y-3">
+              {HERO_BULLETS.map((b) => (
+                <li key={b} className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-mint-500/15 text-mint-700">
+                    <Check weight="bold" className="h-3 w-3" />
+                  </span>
+                  <span className="text-bone-dim">{b}</span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
 
-        <Reveal delay={300}>
-          <div className="relative mx-auto max-w-md">
-            <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-br from-brand-500/25 via-electric-500/15 to-transparent blur-3xl" />
-            <Image
-              src="/mascot.png"
-              alt="El copiloto de LIFLOW OS orbitado por tus finanzas, tus metas y tu productividad"
-              width={780}
-              height={780}
-              priority
-              className="drift h-auto w-full"
-            />
+        {/* right: lead-capture form card */}
+        <Reveal delay={260}>
+          <div className="relative">
+            <div className="absolute -inset-4 -z-10 rounded-[36px] bg-gradient-to-br from-brand-500/20 via-electric-500/12 to-transparent blur-3xl" />
+            <div className="elev rounded-3xl border border-ink-700 bg-ink-900 p-6 sm:p-8">
+              <div className="mb-6 text-center">
+                <Image
+                  src="/mascot-head.png"
+                  alt=""
+                  width={120}
+                  height={150}
+                  priority
+                  className="mx-auto h-16 w-auto"
+                />
+                <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-bone">
+                  Haz <span className="text-brand-700">gratis</span> tu diagnóstico
+                </h2>
+                <p className="mt-1.5 text-sm text-bone-dim">
+                  Recibe tu Score de Salud Financiera y tu primer paso con IA.
+                </p>
+              </div>
+              <DiagnosticForm />
+            </div>
           </div>
         </Reveal>
       </div>
+    </section>
+  );
+}
+
+/* ---------- reinforcement statement ---------- */
+
+function Reinforcement() {
+  return (
+    <section className="relative mx-auto max-w-4xl px-6 pb-6 pt-2 text-center">
+      <Reveal>
+        <p className="font-display text-2xl font-medium leading-snug tracking-tight text-bone sm:text-[1.9rem]">
+          Imagina abrir una sola app y saber{" "}
+          <span className="text-brand-700">exactamente qué hacer</span> con tu
+          dinero hoy.
+        </p>
+      </Reveal>
     </section>
   );
 }
@@ -472,8 +500,7 @@ function Persona() {
 
         <div>
           <Reveal>
-            <Eyebrow>Hecho para ti si…</Eyebrow>
-            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight text-bone">
+            <h2 className="font-display text-4xl font-semibold leading-tight tracking-tight text-bone">
               Tu primer sueldo formal, <span className="text-brand-700">y mil dudas</span>.
             </h2>
             <p className="mt-5 text-bone-dim">
@@ -495,6 +522,67 @@ function Persona() {
             ))}
           </ul>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- testimonials ---------- */
+/* TODO: reemplazar quotes, nombres y fotos por testimonios reales antes de lanzar. */
+
+const TESTIMONIALS = [
+  {
+    img: "/testimonio-1.jpg",
+    quote: "Por primera vez sé cuánto puedo gastar sin culpa. El Score me ordenó la cabeza.",
+    name: "Camila R.",
+    role: "Diseñadora, 26",
+  },
+  {
+    img: "/testimonio-2.jpg",
+    quote: "Dejé de saltar entre apps. Abro una y ya sé cuál es mi siguiente paso.",
+    name: "Diego M.",
+    role: "Ingeniero, 29",
+  },
+  {
+    img: "/testimonio-3.jpg",
+    quote: "Empecé a ahorrar casi sin notarlo. El copiloto hace la parte aburrida.",
+    name: "Valeria S.",
+    role: "Analista, 27",
+  },
+];
+
+function Testimonials() {
+  return (
+    <section className="relative mx-auto max-w-6xl px-6 py-24">
+      <div className="hairline mb-16 h-px w-full" />
+      <Reveal>
+        <h2 className="max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight text-bone sm:text-5xl">
+          Los primeros en probarlo ya lo notan.
+        </h2>
+      </Reveal>
+
+      <div className="mt-12 grid gap-4 md:grid-cols-3">
+        {TESTIMONIALS.map((t, i) => (
+          <Reveal key={t.name} delay={i * 80}>
+            <figure className="elev flex h-full flex-col justify-between rounded-2xl border border-ink-700 bg-ink-900 p-7">
+              <div>
+                <Quotes weight="fill" className="h-6 w-6 text-brand-500/40" />
+                <blockquote className="mt-4 text-lg leading-snug text-bone">
+                  {t.quote}
+                </blockquote>
+              </div>
+              <figcaption className="mt-6 flex items-center gap-3">
+                <span className="relative h-11 w-11 overflow-hidden rounded-full ring-1 ring-ink-600">
+                  <Image src={t.img} alt={t.name} fill sizes="44px" className="object-cover" />
+                </span>
+                <span>
+                  <span className="block text-sm font-medium text-bone">{t.name}</span>
+                  <span className="block text-xs text-bone-faint">{t.role}</span>
+                </span>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
@@ -543,14 +631,13 @@ function Trust() {
 
 function FinalCta() {
   return (
-    <section id="diagnostico" className="relative mx-auto max-w-6xl px-6 py-24">
+    <section id="empezar" className="relative mx-auto max-w-6xl px-6 py-24">
       <Reveal>
         <div className="relative overflow-hidden rounded-[32px] border border-brand-500/25 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 px-8 py-14 shadow-[0_24px_70px_-30px_rgba(12,24,48,0.35)] sm:px-12 lg:px-16">
           <div className="absolute -top-1/2 left-1/2 h-[120%] w-[60%] -translate-x-1/2 rounded-full bg-gradient-to-br from-brand-500/15 to-electric-500/12 blur-[100px]" />
           <div className="relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <Eyebrow>Empieza gratis</Eyebrow>
-              <h2 className="mt-5 max-w-xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-bone sm:text-5xl">
+              <h2 className="max-w-xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-bone sm:text-5xl">
                 Tu Score de Salud Financiera en{" "}
                 <span className="text-brand-700">3 minutos.</span>
               </h2>
@@ -558,9 +645,13 @@ function FinalCta() {
                 Responde 6 preguntas y el copiloto te devuelve tu Score y el
                 primer paso para mejorarlo. Sin conectar tu banco.
               </p>
-              <div className="mt-9 max-w-md">
-                <DiagnosticForm />
-              </div>
+              <a
+                href="#diagnostico"
+                className="group mt-9 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-electric-500 px-6 py-3.5 text-sm font-semibold text-bone shadow-[0_10px_30px_-10px_rgba(14,165,233,0.7)] transition hover:from-brand-400 hover:to-electric-400 hover:shadow-[0_14px_36px_-10px_rgba(14,165,233,0.85)] active:translate-y-[1px]"
+              >
+                Diagnóstico gratis
+                <ArrowRight weight="bold" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
             </div>
 
             <Reveal delay={150}>
@@ -614,12 +705,14 @@ export default function Page() {
       <Nav />
       <main>
         <Hero />
+        <Reinforcement />
         <Problems />
         <Copilot />
         <Modules />
         <Journey />
         <GrowthLoop />
         <Persona />
+        <Testimonials />
         <Trust />
         <FinalCta />
       </main>
